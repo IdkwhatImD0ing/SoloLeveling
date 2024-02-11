@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useRef } from 'react';
 import styles from "../globals.scss";
-import styles from "./styles.scss";
+import styles1 from "./styles.scss";
 import Image from "next/image";
 
 export default function Dashboard() {
