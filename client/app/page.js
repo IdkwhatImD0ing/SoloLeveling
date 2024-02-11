@@ -32,9 +32,8 @@ export default function Landing() {
       </nav>
 
       <section id="hero">
-        {/* <div className="h-screen">
-          <UserButton afterSignOutUrl="/"/>
-        </div> */}
+        {/*<div className = "h-screen">
+      <UserButton afterSignOutUrl = "/" />< /div> */}
 
         {/* <video
           src="https://cdn.vidzflow.com/v/H0LDXZjsnq_1080p_1703000142.mp4"
@@ -74,15 +73,16 @@ export default function Landing() {
           <div className="call-action">
             <SignedIn>
               <Link className="start" href="/dashboard">
-                Let's Start <FontAwesomeIcon icon={faArrowRight} />
+                Let's Start <FontAwesomeIcon icon={faArrowRight} />{" "}
               </Link>
             </SignedIn>
             <SignedOut>
               <Link
                 className="start"
                 href="/sign - in
-    "
+"
               >
+                {" "}
                 Make an Account or Log in
                 <FontAwesomeIcon icon={faArrowRight} />
               </Link>
