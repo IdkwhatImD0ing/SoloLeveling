@@ -1,0 +1,10 @@
+exceptiongroup==1.2.0
+importlib-metadata==7.0.1
+ipykernel==6.29.0
+mediapipe==0.10.9
+opencv-python==4.9.0.80
+pandas==2.2.0
+pickleshare==0.7.5
+pip-chill==1.0.3
+scikit-learn==1.4.0
+tensorflow==2.15.0
