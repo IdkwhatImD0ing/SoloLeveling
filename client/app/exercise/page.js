@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import styles from './exercise.scss';
 import styles1 from '../globals.scss'
 import Quests from '../quest/page';
+import NavBar from '../navbar/page';
 
 export default function Exercise() {
   const videoRef = useRef(null);
@@ -21,6 +22,7 @@ export default function Exercise() {
 
   return (
     <main>
+      <NavBar />
       <div className='container'> 
         <div className='video__container'>
           <video className='video' ref={videoRef} autoPlay playsInline muted></video>
