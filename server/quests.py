@@ -262,6 +262,4 @@ def delete_quest_document(user_email: str, quest_id: str):
     # If the document exists, then delete it
     quest_ref.delete()
 
-    return {"message": "Quest deleted successfully"}
-
         
