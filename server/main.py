@@ -26,6 +26,7 @@ class StatUpdate(BaseModel):
     new_level: int
 
 
+
 @app.post("/create_user/")
 async def create_user(user: User):
     try:
@@ -78,3 +79,4 @@ async def update_quest(user_email: EmailStr, quest_id: str, exercise_name: str, 
         return {"message": f"Exercise {exercise_name} updated successfully to {progress_reps}"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
+    
