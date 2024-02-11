@@ -11,11 +11,15 @@
   "dependencies": {
     "@babel/preset-react": "^7.23.3",
     "@clerk/nextjs": "^4.29.7",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "chart.js": "^4.4.1",
+    "firebase": "^9.23.0",
     "i": "^0.3.7",
     "next": "^14.1.0",
     "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18",
+    "reactfire": "^4.2.3",
     "sass": "^1.70.0",
     "socket.io-client": "^4.7.4"
   },

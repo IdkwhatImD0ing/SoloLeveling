@@ -7,6 +7,8 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPersonRunning, faChartColumn, faUserGroup, faGamepad, faGear, faArrowRight, faFire } from "@fortawesome/free-solid-svg-icons";
 import Quest from '../quest/page';
+import {Chart as ChartJS} from 'chart.js/auto';
+import {Bar, Doughnut, Line} from 'react-chartjs-2';
 
 export default function Dashboard() {
     return (

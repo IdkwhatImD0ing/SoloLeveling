@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "../globals.scss";
 import styles1 from "./quests.scss";
+import ModalWithForm from "../generate/page";
 
 const Quests = () => {
     return (
@@ -56,6 +57,7 @@ const Quests = () => {
                         <p className="quest-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                     </div>
                 </div>
+                <ModalWithForm />
             </div>
             
         </div>

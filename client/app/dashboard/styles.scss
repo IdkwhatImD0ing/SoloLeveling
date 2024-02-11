@@ -46,7 +46,7 @@
         align-items: center;
 
         nav {
-            width: 10vw;
+            width: 6vw;
             height: 90vh;
             border-right: 3px solid var(--grey);
             display: flex;
@@ -56,8 +56,8 @@
             justify-content: space-evenly;
 
             .nav-icons {
-                width: 5vw;
-                height: 5vw;
+                width: 3vw;
+                height: 7vw;
             }
 
         }
@@ -89,7 +89,7 @@
                 flex-direction: row;
                 flex-wrap: wrap;
                 height: auto;
-                gap: 1em;
+                gap: 2em;
                 margin: 0 1em;
                 overflow-y: scroll;
                 scrollbar-color: var(--light-purple) var(--dark-blue);
