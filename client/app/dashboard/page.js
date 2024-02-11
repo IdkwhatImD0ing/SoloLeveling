@@ -61,7 +61,7 @@ export default function Dashboard() {
                     </div>
                 </div>
             </div>
-            <script type="module" src="acquisitions.js"></script>
+            <script type="module" src="./acquisitions.js"></script>
         </div>
     );
 }
