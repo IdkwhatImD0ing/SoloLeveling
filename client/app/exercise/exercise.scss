@@ -11,3 +11,13 @@
     width: 100%;
     height: 900px;
 }
+
+nav {
+    // position: absolute;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
