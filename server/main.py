@@ -70,8 +70,8 @@ async def generate_normal_quest(user_email: str, selected_muscle_group: str):
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
 
 
-@app.put("/update_daily_quest/{user_email}")
-async def update_daily_quest(user_email: EmailStr, quest_id: str, exercise_name: str, reps: str = None):
+@app.put("/update_quest/{user_email}")
+async def update_quest(user_email: EmailStr, quest_id: str, exercise_name: str, reps: str = None):
     try:
         print(exercise_name)
         progress_reps = update_quest_exercise(user_email, quest_id, exercise_name.strip(), reps)

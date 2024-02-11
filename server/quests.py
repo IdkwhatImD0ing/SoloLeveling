@@ -20,9 +20,10 @@ exercise_pool = {
         "high_knees",    
     ],
     "Back": [
-        "squats",
+        "backrows",
     ],
     "Thigh": [
+        "squats",
         "lunges",
     ],
     "Calves": [
@@ -143,13 +144,15 @@ def generate_normal_fitness_quest(user_email: str, selected_muscle_group: str):
     class_type = user_data.get("class")
 
     today_str = date.today().isoformat()
-    selected_exercises = random.sample(exercise_pool[selected_muscle_group], k=5)
+    selected_exercises = random.sample(exercise_pool[selected_muscle_group], k=1)
 
     exercises_detail = {}
     for exercise in selected_exercises:
         exercises_detail[exercise] = {
             "total_reps": exercise_targets[exercise],
             "progress_reps": 0,
+            "total_sets" : 5,
+            "progress_sets": 0,
         }
 
     # Generate quest name and description through GPT-3
@@ -230,7 +233,15 @@ def update_quest_exercise(user_email: str, quest_id: str, exercise_name: str, re
     # Increment the progress reps by 1 or set it to a specified value
     exercise_detail["progress_reps"] = exercise_detail.get("progress_reps", 0) + 1 if reps is None else int(reps)
     
-    # Update the quest
+    # Update the progress of exercises and sets
+    if int(exercise_detail["progress_reps"]) >= int(exercise_detail["total_reps"]):
+        exercise_detail["progress_sets"] = exercise_detail.get("progress_sets", 0) + 1
+        if int(exercise_detail["progress_sets"]) == int(exercise_detail["total_sets"]):
+            quest_ref.update({f"exercise.{exercise_name}.progress_sets": 5})
+        else:
+            quest_ref.update({f"exercise.{exercise_name}.progress_sets": exercise_detail["progress_sets"]})
+            exercise_detail["progress_reps"] %= exercise_detail["total_reps"]
+            
     quest_ref.update({f"exercise.{exercise_name}.progress_reps": exercise_detail["progress_reps"]})
     
     return exercise_detail["progress_reps"]
