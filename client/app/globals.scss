@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Turret+Road:wght@200;300;400;500;700;800&display=swap');
+
 :root {
   --max-width: 1100px;
   --border-radius: 12px;
@@ -41,6 +43,11 @@
   --black: #020513;
   --dark-purple: #41146F;
   --light-purple: #9734F9;
+  --grey: #D9D9D9;
+  --dark-blue: #14146F;
+  --light-blue: #1C1C9A;
+
+  --turret: 'Turret Road', sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
