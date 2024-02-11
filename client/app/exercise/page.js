@@ -22,7 +22,7 @@ export default function Exercise() {
 
   return (
     <main>
-      <NavBar />
+      {/* <NavBar /> */}
       <div className='container'> 
         <div className='video__container'>
           <video className='video' ref={videoRef} autoPlay playsInline muted></video>
