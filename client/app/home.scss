@@ -31,6 +31,8 @@
   position: relative;
   height: 100vh;
   overflow: hidden;
+  background-color: var(--black);
+
 }
 
 .hero__inner {
@@ -38,6 +40,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  // width: 50%;
 }
 
 .home__hero--headline {
@@ -91,12 +94,13 @@
   font-size: 1.5rem;
   color: #fff;
   font-weight: 500;
-  max-width: 750px;
+  // max-width: 750px;
   text-align: center;
+  color: var(--light-purple);
 }
 
 .hero__search--outer {
-  max-width: 1000px;
+  // max-width: 1000px;
   margin: 0 auto;
 }
 
@@ -107,15 +111,11 @@
   justify-content: space-around;
 }
 
-.h-screen {
-  position: absolute;
-  top: 5%;
-  right: 5%;
-}
+
 
 .start {
-  background-color: var(--light-blue);
-  border: 3px solid var(--dark-blue);
+  // background-color: var(--light-purple);
+  border: 3px solid var(--dark-purple);
   border-radius: 20px;
   padding: .5em 1em;
   margin: 1em;
@@ -124,4 +124,37 @@
   display: flex;
   gap: 0.5em;
   justify-content: center;
+  &:hover {
+    background-color: var(--light-purple);
+  }
+  transition: background-color 0.3s linear;
+}
+
+nav {
+  // background-color: var(--dark-purple);
+  padding: 1em;
+  display: flex;
+  gap: 2em;
+  font-size: 1.5em;
+  color: var(--grey);
+  width: 2000px;
+  max-width: 90vw;
+  margin: auto;
+  padding-bottom: 0;
+  position: relative;
+  height: 3em;
+  font-family: var(--turret);
+  border-bottom: 2px solid var(--grey);
+  .h-screen {
+    position: absolute;
+    top: 5%;
+    right: 5%;
+    padding: 1em;
+  }
+  .signin, .signup {
+    &:hover {
+      color: var(--light-purple);
+    }
+    transition: color 0.3s linear;
+  }
 }
