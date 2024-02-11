@@ -1,15 +1,28 @@
 "use client";
-import React, { useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./exercise.scss";
 import styles1 from "../globals.scss";
 import Quests from "../quest/page";
 import io from "socket.io-client";
+import { set } from "firebase/database";
+
+const trigger_points = [
+  "squat_down",
+  "jumping_jack_up",
+  "curl_up",
+  "lunge_down",
+  "high_knee_up",
+  "push_up_down",
+  "back_row_up",
+];
 
 export default function Exercise() {
   const videoRef = useRef(null);
   const socket = useRef(null);
   const intervalRef = useRef(null); // To hold the reference to the interval
   const [isClient, setIsClient] = useState(false);
+  const [receivedLabel, setReceivedLabel] = useState(null);
+  const [previousLabel, setPreviousLabel] = useState(null);
 
   useEffect(() => {
     setIsClient(true);
@@ -72,6 +85,17 @@ export default function Exercise() {
               image: reader.result,
             });
           };
+          socket.current.on("label", (label) => {
+            // check if label in trigger points
+            if (receivedLabel != previousLabel && trigger_points.includes(label)) {
+              console.log("Received label:", label);
+              setPreviousLabel(receivedLabel);
+              setReceivedLabel(label); // Update state with the received label
+            }
+
+            // console.log("Received label:", label);
+            // setReceivedLabel(label); // Update state with the received label
+          });
         },
         "image/jpeg",
         0.95
