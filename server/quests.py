@@ -84,6 +84,15 @@ def generate_daily_fitness_challenge(class_type):
     muscle_group = random.choice(list(exercise_pool.keys()))
     exercise = random.choice(exercise_pool[muscle_group])
 
+    total_reps = exercise_targets[exercise]
+
+    exercises_detail = {
+        exercise: {
+            "total_reps": total_reps,
+            "progress_reps": 0,
+        }
+    }
+
     response = client.chat.completions.create(
         model="gpt-3.5-turbo-0125",
         response_format={"type": "json_object"},
@@ -120,7 +129,7 @@ The output should be in JSON format, like so:\n\n{\quest_name: quest_name,\ndesc
         "date": today_str,
         "quest_name": quest["quest_name"],
         "description": quest["description"],
-        "exercise": exercise,
+        "exercise": exercises_detail,
         "muscle_group": muscle_group,
         "points": points,
         "XP Reward": 100,
@@ -170,7 +179,14 @@ def generate_normal_fitness_quest(user_email: str, selected_muscle_group: str):
     class_type = user_data.get("class")
 
     today_str = date.today().isoformat()
-    exercise = random.choice(exercise_pool[selected_muscle_group])
+    selected_exercises = random.sample(exercise_pool[selected_muscle_group], k=5)
+
+    exercises_detail = {}
+    for exercise in selected_exercises:
+        exercises_detail[exercise] = {
+            "total_reps": exercise_targets[exercise],
+            "progress_reps": 0,
+        }
 
     # Generate quest name and description through GPT-3
     response = client.chat.completions.create(
@@ -187,7 +203,7 @@ The output should be in JSON format, like so:\n\n{\n"quest_name": "[quest_name]"
             },
             {
                 "role": "user",
-                "content": f"User Class Type: {class_type}, Exercise: {exercise}",
+                "content": f"User Class Type: {class_type}, Muscle Group: {selected_muscle_group}",
             },
         ],
         temperature=0.7,
@@ -209,7 +225,7 @@ The output should be in JSON format, like so:\n\n{\n"quest_name": "[quest_name]"
         "date": today_str,
         "quest_name": quest["quest_name"],
         "description": quest["description"],
-        "exercise": exercise,
+        "exercise": exercises_detail,
         "muscle_group": selected_muscle_group,
         "points": points,
         "XP Reward": 100,
