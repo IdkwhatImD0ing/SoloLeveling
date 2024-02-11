@@ -1,11 +1,19 @@
 "use client"
-import React, { useEffect, useRef } from 'react';
+import React, {useEffect, useRef} from 'react';
 import styles from "../globals.scss";
 import styles1 from "./styles.scss";
 import Image from "next/image";
 import Link from 'next/link';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPersonRunning, faChartColumn, faUserGroup, faGamepad, faGear, faArrowRight, faFire } from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {
+  faPersonRunning,
+  faChartColumn,
+  faUserGroup,
+  faGamepad,
+  faGear,
+  faArrowRight,
+  faFire
+} from "@fortawesome/free-solid-svg-icons";
 import Quest from '../quest/page';
 import NavBar from '../navbar/page';
 
@@ -22,7 +30,8 @@ export default function Dashboard() {
                     <div className='top-row'>
                             <Link className='exercise' href="/exercise">
                                 Start Workout
-                                <FontAwesomeIcon icon={faArrowRight} />
+                                <FontAwesomeIcon icon={
+    faArrowRight} />
                             </Link>
                     </div>
                     <div className='panels'>
