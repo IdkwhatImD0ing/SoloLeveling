@@ -5,8 +5,8 @@ import {
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 
 import styles from "./globals.scss";
@@ -21,22 +21,18 @@ export default function Landing() {
             Sign In
           </Link>
           <Link className="signup" href="/sign-up">
-            Sign Up
-          </Link>
-        </SignedOut>
-        <SignedIn>
-          <div className="h-screen">
-            <UserButton afterSignOutUrl="/" />
-          </div>
-        </SignedIn>
-      </nav>
+  Sign Up</Link>
+        </SignedOut><SignedIn><div className = "h-screen">
+      <UserButton afterSignOutUrl = "/" /></div>
+        </SignedIn><
+      /nav>
 
       <section id="hero">
-        {/* <div className="h-screen">
-          <UserButton afterSignOutUrl="/"/>
-        </div> */}
+        {/*<div className = "h-screen">
+      <UserButton afterSignOutUrl = "/" />< /div> */
+}
 
-        {/* <video
+{/* <video
           src="https://cdn.vidzflow.com/v/H0LDXZjsnq_1080p_1703000142.mp4"
           autoPlay
           loop
@@ -46,9 +42,10 @@ export default function Landing() {
         <div className="hero__video--lighting"></div>
         <div className="hero__inner">
           {/* <Nav /> */}
-          {/* <div className="divider"></div> */}
+          {/* <div className="divider"></div> */
+}
 
-          <div className="hero__below-divider">
+<div className="hero__below-divider">
             <div className="home__hero--headline">
               <div className="home__hero-1">
                 <div>What if working out wasn't just a chore...</div>{" "}
@@ -74,22 +71,17 @@ export default function Landing() {
           <div className="call-action">
             <SignedIn>
               <Link className="start" href="/dashboard">
-                Let's Start <FontAwesomeIcon icon={faArrowRight} />
+Let's Start <FontAwesomeIcon icon={faArrowRight} /> <
+    /Link>
+            </SignedIn><SignedOut>< Link
+className = "start"
+href = "/sign - in
+"
+    > Make an Account or Log in
+    <FontAwesomeIcon icon = {faArrowRight} />
               </Link>
-            </SignedIn>
-            <SignedOut>
-              <Link
-                className="start"
-                href="/sign - in
-    "
-              >
-                Make an Account or Log in
-                <FontAwesomeIcon icon={faArrowRight} />
-              </Link>
-            </SignedOut>
-          </div>
-        </div>
-      </section>
-    </div>
+    </SignedOut>
+          </div></div>
+      </section>< /div>
   );
 }
