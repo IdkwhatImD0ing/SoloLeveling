@@ -92,7 +92,7 @@ async def update_quest(user_email: EmailStr, quest_id: str, exercise_name: str, 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
     
-@app.delete("/delete_quest/{user_email}")
+@sio.on("delete_quest")
 async def delete_quest(user_email: EmailStr, quest_id: str):
     try:
         delete_quest_document(user_email, quest_id)
