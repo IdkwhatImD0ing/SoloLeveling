@@ -3,6 +3,7 @@ import random
 from datetime import date
 from openai import OpenAI
 import json
+import uuid
 
 client = OpenAI()
 
@@ -76,7 +77,7 @@ exercise_targets = {
 }
 
 
-def generate_daily_fitness_challenge():
+def generate_daily_fitness_challenge(class_type):
     today_str = date.today().isoformat()
 
     # Randomly select a muscle group and then an exercise within that group
@@ -89,8 +90,17 @@ def generate_daily_fitness_challenge():
         messages=[
             {
                 "role": "system",
-                "content": "You are the game master for a live-action RPG. \n\nBackstory: The hero is a god summoned warrior to defend the land against an evil necromancer, but is currently too weak.\n\nYou'll receive an exercise and must create a quest name and description for a daily exercise challenge. Provide a backstory for the quest, but since it is a daily quest, it should be mundane. The user already knows the backstory, so no need to repeat it in the description.\n\nThe output should be in JSON format, like so:\n\n{\quest_name: quest_name,\ndescription: quest_description,\n}",
-            }
+                "content": """You are the game master for a live-action RPG.
+Backstory: The hero is a god summoned warrior to defend the land against an evil necromancer, but is currently too weak.
+You'll receive an exercise and must create a quest name and description for a daily exercise challenge.
+Provide a backstory for the quest, but since it is a daily quest, it should be mundane.
+The user already knows the user's backstory, so no need to repeat it in the description.
+The output should be in JSON format, like so:\n\n{\quest_name: quest_name,\ndescription: quest_description,\n}""",
+            },
+            {
+                "role": "user",
+                "content": f"User Class Type {class_type}, Exercise: {exercise}",
+            },
         ],
         temperature=0.7,
         max_tokens=1024,
@@ -108,13 +118,13 @@ def generate_daily_fitness_challenge():
     # Construct the challenge object
     daily_challenge = {
         "date": today_str,
-        "quest_name": quest.quest_name,
-        "description": quest.description,
+        "quest_name": quest["quest_name"],
+        "description": quest["description"],
         "exercise": exercise,
         "muscle_group": muscle_group,
         "points": points,
         "XP Reward": 100,
-        "Other Reward": "Muscle Master Badge",
+        "Other Reward": f"{muscle_group} Daily Challenge Badge",
     }
 
     return daily_challenge
@@ -122,6 +132,12 @@ def generate_daily_fitness_challenge():
 
 def get_or_create_daily_quest(user_email: str):
     user_ref = db.collection("users").document(user_email)
+
+    # Get class type
+    user_doc = user_ref.get()
+    user_data = user_doc.to_dict()
+    class_type = user_data.get("class")
+
     quests_ref = user_ref.collection("quests")
     today_str = date.today().isoformat()
 
@@ -133,10 +149,78 @@ def get_or_create_daily_quest(user_email: str):
         if quest_data.get("date") == today_str:
             return quest_data  # Return today's quest if it exists
         else:
-            new_quest = generate_daily_fitness_challenge()
+            new_quest = generate_daily_fitness_challenge(class_type)
             daily_quest_ref.set(new_quest)
             return new_quest
     else:
-        new_quest = generate_daily_fitness_challenge()
+        new_quest = generate_daily_fitness_challenge(class_type)
         daily_quest_ref.set(new_quest)
         return new_quest
+
+
+def generate_normal_fitness_quest(user_email: str, selected_muscle_group: str):
+    if selected_muscle_group not in exercise_pool:
+        raise ValueError("Selected muscle group is not valid.")
+
+    user_ref = db.collection("users").document(user_email)
+
+    # Get class type
+    user_doc = user_ref.get()
+    user_data = user_doc.to_dict()
+    class_type = user_data.get("class")
+
+    today_str = date.today().isoformat()
+    exercise = random.choice(exercise_pool[selected_muscle_group])
+
+    # Generate quest name and description through GPT-3
+    response = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {
+                "role": "system",
+                "content": """You are the game master for a live-action RPG.
+Backstory: The hero is a god summoned warrior to defend the land against an evil necromancer, but is currently too weak.
+You\'ll receive an exercise and must create a quest name and description for a normal quest based on the selected muscle group.
+Provide a backstory for the quest, but since it is a normal quest, it should represent a small challenge.
+The user already knows the backstory, so no need to repeat it in the description.
+The output should be in JSON format, like so:\n\n{\n"quest_name": "[quest_name]",\n"description": "[quest_description]"\n}""",
+            },
+            {
+                "role": "user",
+                "content": f"User Class Type: {class_type}, Exercise: {exercise}",
+            },
+        ],
+        temperature=0.7,
+        max_tokens=1024,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0,
+    )
+
+    # Parse the GPT-3 response
+    quest = json.loads(response.choices[0].message.content)
+
+    # Points object, assuming 40 points for targeted muscle group exercise
+    points = {mg: 0 for mg in exercise_pool}  # Initialize all to 0
+    points[selected_muscle_group] = 100
+
+    # Construct the challenge object
+    normal_challenge = {
+        "date": today_str,
+        "quest_name": quest["quest_name"],
+        "description": quest["description"],
+        "exercise": exercise,
+        "muscle_group": selected_muscle_group,
+        "points": points,
+        "XP Reward": 100,
+        "Other Reward": f"{selected_muscle_group} Master Badge",
+    }
+
+    # Store the quest in Firestore under the user's "quests" collection
+    user_ref = db.collection("users").document(user_email)
+    quests_ref = user_ref.collection("quests")
+    uuid_string = str(uuid.uuid4())
+    quest_id = f"normal_quest_{uuid_string}"
+    quests_ref.document(quest_id).set(normal_challenge)
+
+    return normal_challenge

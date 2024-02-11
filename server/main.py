@@ -10,7 +10,7 @@ firebase_admin.initialize_app(cred)
 from fastapi import FastAPI, HTTPException, Path
 from pydantic import BaseModel, EmailStr
 from user import create_initial_user, update_user_stat
-from quests import get_or_create_daily_quest
+from quests import get_or_create_daily_quest, generate_normal_fitness_quest
 
 app = FastAPI()
 
@@ -18,7 +18,7 @@ app = FastAPI()
 class User(BaseModel):
     email: EmailStr
     name: str
-    class_type: str = None
+    class_type: str
 
 
 class StatUpdate(BaseModel):
@@ -55,5 +55,16 @@ async def get_daily_quest(user_email: EmailStr = Path(..., example="user@example
     try:
         daily_quest = get_or_create_daily_quest(user_email)
         return {"daily_quest": daily_quest}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
+
+
+@app.post("/generate_normal_quest/{user_email}")
+async def generate_normal_quest(user_email: str, selected_muscle_group: str):
+    try:
+        normal_quest = generate_normal_fitness_quest(user_email, selected_muscle_group)
+        return {"normal_quest": normal_quest}
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
