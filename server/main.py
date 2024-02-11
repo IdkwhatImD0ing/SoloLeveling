@@ -45,10 +45,10 @@ async def create_user(user: User):
         create_initial_user(
             user.email, user.name, user.class_type
         )  # Use the helper function
-        return {"message": "User created successfully", "email": user.email}
+        await sio.emit('success', {'detail': f"User created successfully"}, to=sid)
     except ValueError as e:
         # Handle the ValueError raised if the user already exists
-        raise HTTPException(status_code=400, detail=str(e))
+        await sio.emit('error_occurred', {'detail': f"An error occurred: {str(e)}"}, to=sid)
     except Exception as e:
         # Handle any other exceptions
         await sio.emit('error_occurred', {'detail': f"An error occurred: {str(e)}"}, to=sid)
@@ -58,7 +58,7 @@ async def create_user(user: User):
 async def update_stat(user_email: EmailStr, stat_update: StatUpdate):
     try:
         update_user_stat(user_email, stat_update.stat_name, stat_update.new_level)
-        return {"message": "Stat updated successfully"}
+        await sio.emit('success', {'detail': f"Stat updated successfully"}, to=sid)
     except Exception as e:
         await sio.emit('error_occurred', {'detail': f"An error occurred: {str(e)}"}, to=sid)
 
@@ -78,7 +78,7 @@ async def generate_normal_quest(user_email: str, selected_muscle_group: str):
         normal_quest = generate_normal_fitness_quest(user_email, selected_muscle_group)
         return {"normal_quest": normal_quest}
     except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        await sio.emit('error_occurred', {'detail': f"An error occurred: {str(e)}"}, to=sid)
     except Exception as e:
         await sio.emit('error_occurred', {'detail': f"An error occurred: {str(e)}"}, to=sid)
 
@@ -88,7 +88,7 @@ async def update_quest(user_email: EmailStr, quest_id: str, exercise_name: str, 
     try:
         print(exercise_name)
         progress_reps = update_quest_exercise(user_email, quest_id, exercise_name.strip(), reps)
-        return {"message": f"Exercise {exercise_name} updated successfully to {progress_reps}"}
+        await sio.emit('success', {'detail': f"Exercise {exercise_name} updated successfully to {progress_reps}"}, to=sid)
     except Exception as e:
         await sio.emit('error_occurred', {'detail': f"An error occurred: {str(e)}"}, to=sid)
     
@@ -96,7 +96,7 @@ async def update_quest(user_email: EmailStr, quest_id: str, exercise_name: str, 
 async def delete_quest(user_email: EmailStr, quest_id: str):
     try:
         delete_quest_document(user_email, quest_id)
-        return {"message": f"Quest {quest_id} deleted successfully"}
+        await sio.emit('success', {'detail': f"Quest {quest_id} deleted successfully"}, to=sid)
     except Exception as e:
         await sio.emit('error_occurred', {'detail': f"An error occurred: {str(e)}"}, to=sid)
 
