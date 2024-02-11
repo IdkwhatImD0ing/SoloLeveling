@@ -51,7 +51,7 @@ async def create_user(user: User):
         raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
         # Handle any other exceptions
-        raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
+        await sio.emit('error_occurred', {'detail': f"An error occurred: {str(e)}"}, to=sid)
 
 
 @sio.on("update_stat")
@@ -60,7 +60,7 @@ async def update_stat(user_email: EmailStr, stat_update: StatUpdate):
         update_user_stat(user_email, stat_update.stat_name, stat_update.new_level)
         return {"message": "Stat updated successfully"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
+        await sio.emit('error_occurred', {'detail': f"An error occurred: {str(e)}"}, to=sid)
 
 
 @sio.on("get_daily_quest")
@@ -69,7 +69,7 @@ async def get_daily_quest(user_email: EmailStr = Path(..., example="user@example
         daily_quest = get_or_create_daily_quest(user_email)
         return {"daily_quest": daily_quest}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
+        await sio.emit('error_occurred', {'detail': f"An error occurred: {str(e)}"}, to=sid)
 
 
 @sio.on("generate_normal_quest")
@@ -80,7 +80,7 @@ async def generate_normal_quest(user_email: str, selected_muscle_group: str):
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
+        await sio.emit('error_occurred', {'detail': f"An error occurred: {str(e)}"}, to=sid)
 
 
 @sio.on("update_quest")
@@ -90,7 +90,7 @@ async def update_quest(user_email: EmailStr, quest_id: str, exercise_name: str, 
         progress_reps = update_quest_exercise(user_email, quest_id, exercise_name.strip(), reps)
         return {"message": f"Exercise {exercise_name} updated successfully to {progress_reps}"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
+        await sio.emit('error_occurred', {'detail': f"An error occurred: {str(e)}"}, to=sid)
     
 @sio.on("delete_quest")
 async def delete_quest(user_email: EmailStr, quest_id: str):
@@ -98,7 +98,8 @@ async def delete_quest(user_email: EmailStr, quest_id: str):
         delete_quest_document(user_email, quest_id)
         return {"message": f"Quest {quest_id} deleted successfully"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
+        await sio.emit('error_occurred', {'detail': f"An error occurred: {str(e)}"}, to=sid)
+
 
 
     
