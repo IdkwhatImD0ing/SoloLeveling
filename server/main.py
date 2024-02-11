@@ -81,6 +81,8 @@ async def generate_normal_quest(sid, message):
     try:
         user_email = message.get("user_email")
         selected_muscle_group = message.get("selected_muscle_group")
+        print(user_email)
+        print(selected_muscle_group)
         normal_quest = generate_normal_fitness_quest(user_email, selected_muscle_group)
         return {"normal_quest": normal_quest}
     except ValueError as e:

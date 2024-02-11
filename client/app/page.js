@@ -2,8 +2,6 @@
 import io from "socket.io-client";
 import {
   UserButton,
-  ClerkProvider,
-  RedirectToSignIn,
   SignedIn,
   SignedOut,
 } from "@clerk/nextjs";

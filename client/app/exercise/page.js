@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState} from "react";
 import styles from "./exercise.scss";
 import styles1 from "../globals.scss";
 import Quests from "../quest/page";
@@ -9,8 +9,11 @@ export default function Exercise() {
   const videoRef = useRef(null);
   const socket = useRef(null);
   const intervalRef = useRef(null); // To hold the reference to the interval
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    setIsClient(true);
+
     // Initialize Socket.IO connection
     socket.current = io("http://localhost:8000");
 
@@ -40,6 +43,12 @@ export default function Exercise() {
     };
   }, []);
 
+  useEffect(() => {
+    if (isClient) {
+      startSendingVideo();
+    }
+  }, [isClient]); // Only run this effect when `isClient` changes
+
   const captureAndSendFrame = () => {
     if (videoRef.current && socket.current.connected) {
       const canvas = document.createElement("canvas");
@@ -57,7 +66,7 @@ export default function Exercise() {
           }
           reader.readAsDataURL(blob);
           reader.onloadend = () => {
-            console.log(reader.result);
+            // console.log(reader.result);
             socket.current.emit("receive_image", {
               user_email: process.env.NEXT_PUBLIC_DEMO_EMAIL,
               image: reader.result,
