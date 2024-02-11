@@ -234,7 +234,7 @@ def update_quest_exercise(user_email: str, quest_id: str, exercise_name: str, re
     exercise_detail["progress_reps"] = exercise_detail.get("progress_reps", 0) + 1 if reps is None else int(reps)
     
     # Update the progress of exercises and sets
-    if int(exercise_detail["progress_reps"]) >= int(exercise_detail["total_reps"]):
+    if quest_id != "daily_quest" and int(exercise_detail["progress_reps"]) >= int(exercise_detail["total_reps"]):
         exercise_detail["progress_sets"] = exercise_detail.get("progress_sets", 0) + 1
         if int(exercise_detail["progress_sets"]) == int(exercise_detail["total_sets"]):
             quest_ref.update({f"exercise.{exercise_name}.progress_sets": 5})
@@ -245,3 +245,23 @@ def update_quest_exercise(user_email: str, quest_id: str, exercise_name: str, re
     quest_ref.update({f"exercise.{exercise_name}.progress_reps": exercise_detail["progress_reps"]})
     
     return exercise_detail["progress_reps"]
+
+def delete_quest_document(user_email: str, quest_id: str):
+    user_ref = db.collection("users").document(user_email)
+    quests_ref = user_ref.collection("quests")
+    print(quests_ref)
+    quest_ref = quests_ref.document(quest_id)
+    
+    # Attempt to get the document
+    quest_doc = quest_ref.get()
+    
+    # Check if the document exists before deleting
+    if not quest_doc.exists:
+        raise ValueError("Quest does not exist.")
+    
+    # If the document exists, then delete it
+    quest_ref.delete()
+
+    return {"message": "Quest deleted successfully"}
+
+        

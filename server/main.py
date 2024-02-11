@@ -14,7 +14,7 @@ firebase_admin.initialize_app(cred)
 from fastapi import FastAPI, HTTPException, Path
 from pydantic import BaseModel, EmailStr
 from user import create_initial_user, update_user_stat
-from quests import get_or_create_daily_quest, generate_normal_fitness_quest, update_quest_exercise
+from quests import get_or_create_daily_quest, generate_normal_fitness_quest, update_quest_exercise, delete_quest_document
 
 app = FastAPI()
 sio = socketio_mount(app)
@@ -36,6 +36,7 @@ class User(BaseModel):
 class StatUpdate(BaseModel):
     stat_name: str
     new_level: int
+
 
 
 @sio.on("create_user")
@@ -90,6 +91,16 @@ async def update_quest(user_email: EmailStr, quest_id: str, exercise_name: str, 
         return {"message": f"Exercise {exercise_name} updated successfully to {progress_reps}"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
+    
+@app.delete("/delete_quest/{user_email}")
+async def delete_quest(user_email: EmailStr, quest_id: str):
+    try:
+        delete_quest_document(user_email, quest_id)
+        return {"message": f"Quest {quest_id} deleted successfully"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
+
+
     
 @sio.on('disconnect')
 async def disconnect(sid):
