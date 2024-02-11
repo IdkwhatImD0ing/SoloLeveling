@@ -31,19 +31,32 @@ Additionally, incorrect exercise form is a widespread issue, often due to a lack
 
 Our AR app offers a multifaceted solution:
 
-Gamification: By turning exercise into a series of quests, the app injects fun and a sense of progression into the fitness journey, making the user eager to 'play' again.
+**Gamification**: By turning exercise into a series of quests, the app injects fun and a sense of progression into the fitness journey, making the user eager to 'play' again.
 
-Accountability: The quest system encourages regular activity, helping users build and maintain a consistent exercise habit.
+**Accountability**: The quest system encourages regular activity, helping users build and maintain a consistent exercise habit.
 
-Education: Through AR, the app provides real-time feedback on the user's form, ensuring exercises are performed correctly for maximum effectiveness and safety.
+**Education**: Through AR, the app provides real-time feedback on the user's form, ensuring exercises are performed correctly for maximum effectiveness and safety.
 
-Accessibility: As a web app, it's readily available without the need for specialized equipment or gym memberships, making it easier for users to start and stick with their fitness routines.
+**Accessibility**: As a web app, it's readily available without the need for specialized equipment or gym memberships, making it easier for users to start and stick with their fitness routines.
 
-Community: Users can share their progress and achievements, fostering a sense of community and shared purpose, which is known to be a powerful motivator in maintaining a fitness regimen.
+**Community**: Users can share their progress and achievements, fostering a sense of community and shared purpose, which is known to be a powerful motivator in maintaining a fitness regimen.
 
-In essence, our app leverages technology to make fitness more enjoyable, habitual, and safe, addressing the root causes of sedentary behavior.
+Our app leverages technology to make fitness more enjoyable, habitual, and safe, addressing the root causes of sedentary behavior.
 
 ## Goals
+**Enhance Engagement**: Transform workouts into an engaging experience with gamification to combat sedentary lifestyles.
+
+**Ensure Correct Form**: Use AR for real-time posture feedback, promoting safe and effective exercise.
+
+**Encourage Habit Formation**: Motivate consistent exercise through a rewarding quest system.
+
+**Improve Accessibility**: Provide a no-equipment-needed platform to facilitate fitness anywhere, anytime.
+
+**Cultivate Community**: Foster a supportive network for shared motivation and accountability.
+
+**Innovate with AR**: Leverage the latest AR technology for an immersive fitness journey.
+
+**Educate and Empower**: Offer knowledge on exercise benefits and techniques, empowering users towards a healthier life.
 
 ## Built With
 
