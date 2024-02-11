@@ -1,5 +1,5 @@
 "use client";
-import React, {useEffect, useRef} from "react";
+import React, { useEffect, useRef } from "react";
 import styles from "./exercise.scss";
 import styles1 from "../globals.scss";
 import Quests from "../quest/page";
@@ -10,13 +10,14 @@ export default function Exercise() {
 
   useEffect(() => {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices.getUserMedia({video : true})
-          .then((stream) => {
-            if (videoRef.current) {
-              videoRef.current.srcObject = stream;
-            }
-          })
-          .catch((err) => console.error(err));
+      navigator.mediaDevices
+        .getUserMedia({ video: true })
+        .then((stream) => {
+          if (videoRef.current) {
+            videoRef.current.srcObject = stream;
+          }
+        })
+        .catch((err) => console.error(err));
     }
   }, []);
 
@@ -26,9 +27,10 @@ export default function Exercise() {
       <div className="container">
         <div className="video__container">
           <video
-  className = "video"
-  ref = {videoRef} autoPlay
-  playsInline
+            className="video"
+            ref={videoRef}
+            autoPlay
+            playsInline
             muted
           ></video>
         </div>
