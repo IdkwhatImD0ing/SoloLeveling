@@ -1,3 +1,7 @@
+.home {
+  max-height: 100vh;
+}
+
 .hero {
   position: relative;
 }
@@ -29,18 +33,37 @@
 
 #hero {
   position: relative;
-  height: 100vh;
+  height: 70vh;
   overflow: hidden;
   background-color: var(--black);
 
 }
 
 .hero__inner {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  // position: absolute;
+  // top: 50%;
+  // left: 50%;
+  // transform: translate(-50%, -50%);
   // width: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100vw;
+}
+
+.hero__below-divider {
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-basis: 500px;
+  flex-grow: 1;
+}
+
+.call-action {
+  display: flex;
+  flex-basis: 500px;
+  flex-grow: 1;
 }
 
 .home__hero--headline {
@@ -65,26 +88,27 @@
   line-height: 90%;
 }
 
-.home__hero-2 {
-  opacity: 0.6;
-  letter-spacing: -0.025em;
-  margin-top: -0.5vw;
-  margin-bottom: -0.5vw;
-  font-size: 35%;
-  line-height: 90%;
-}
+// .home__hero-2 {
+//   opacity: 0.6;
+//   letter-spacing: -0.025em;
+//   margin-top: -0.5vw;
+//   margin-bottom: -0.5vw;
+//   font-size: 35%;
+//   line-height: 90%;
+// }
 
-.home__hero-3 {
-  opacity: 0.6;
-  letter-spacing: -0.025em;
-  margin-bottom: -0.5vw;
-  font-size: 50%;
-  line-height: 90%;
-}
+// .home__hero-3 {
+//   opacity: 0.6;
+//   letter-spacing: -0.025em;
+//   margin-bottom: -0.5vw;
+//   font-size: 50%;
+//   line-height: 90%;
+// }
 
 .home__hero-4 {
   letter-spacing: -0.02em;
-  line-height: 60%;
+  // line-height: 60%;
+  font-size: 0.5em;
 }
 
 .hero__h1 {
@@ -96,7 +120,7 @@
   font-weight: 500;
   // max-width: 750px;
   text-align: center;
-  color: var(--light-purple);
+  color: var(--grey);
 }
 
 .hero__search--outer {
@@ -104,26 +128,24 @@
   margin: 0 auto;
 }
 
-.hero__below-divider {
-  height: calc(100vh - 155.65px);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-}
+
 
 
 
 .start {
   // background-color: var(--light-purple);
-  border: 3px solid var(--dark-purple);
+  border: 3px solid var(--grey);
   border-radius: 20px;
   padding: .5em 1em;
   margin: 1em;
   font-size: 1.5em;
   font-family: var(--turret);
   display: flex;
+  flex-grow: 1;
   gap: 0.5em;
   justify-content: center;
+  align-items: center;
+  font-size: 3em;
   &:hover {
     background-color: var(--light-purple);
   }

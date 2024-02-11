@@ -8,7 +8,7 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 export default function Landing() {
 
   return (
-    <div>
+    <div className="home">
       <nav>
         <SignedOut>
           <Link className="signin" href="/sign-in">Sign In</Link>
@@ -37,18 +37,19 @@ export default function Landing() {
         <div className="hero__video--lighting"></div>
         <div className="hero__inner">
           {/* <Nav /> */}
-          <div className="divider"></div>
+          {/* <div className="divider"></div> */}
+
           <div className="hero__below-divider">
             <div className="home__hero--headline">
               <div className="home__hero-1">
-                <div>What if</div>
+                <div>What if working out wasn't just a chore...</div>
               </div>
-              <div className="home__hero-2">
+              {/* <div className="home__hero-2">
                 <div>...</div>
               </div>
               <div className="home__hero-3">
                 <div>Working out wasn't just a chore</div>
-              </div>
+              </div> */}
               <div className="home__hero-4">
                 <div>But a game?</div>
               </div>
@@ -60,18 +61,23 @@ export default function Landing() {
               <Searchbar search = {search}  setSearch = {setSearch} nav_funct={() => navigate('/bills')}/>
             </div> */}
           </div>
-          <SignedIn>
-            <Link className='start' href="/dashboard">
-                Let's Start
-                <FontAwesomeIcon icon={faArrowRight} />
-            </Link>            
-          </SignedIn>
-          <SignedOut>
-            <Link className='start' href="/sign-in">
-                Make an Account / Log in
-                <FontAwesomeIcon icon={faArrowRight} />
-            </Link>            
-          </SignedOut>
+
+
+          <div className="call-action">
+            <SignedIn>
+              <Link className='start' href="/dashboard">
+                  Let's Start
+                  <FontAwesomeIcon icon={faArrowRight} />
+              </Link>            
+            </SignedIn>
+            <SignedOut>
+              <Link className='start' href="/sign-in">
+                  Make an Account or Log in
+                  <FontAwesomeIcon icon={faArrowRight} />
+              </Link>            
+            </SignedOut>            
+          </div>
+
 
         </div>
       </section>
