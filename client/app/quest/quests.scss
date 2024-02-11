@@ -1,0 +1,67 @@
+.quests {
+    border-radius: 20px;
+    border: 3px solid var(--light-purple);
+    display: flex;
+    padding: 1em;
+    display: flex;
+    // height: 700px;
+    // max-height: 80vh;
+    width: 300px;
+    flex-direction: column;
+    .divider {
+        width: 100%;
+        background-color: var(--grey);
+        height: 3px;
+        margin: 1em 0em;
+    }
+
+    @mixin white-box {
+        border-radius: 20px;
+        border: 1px solid var(--grey);
+        display: flex;
+        flex-direction: column;
+        padding: 1em;
+        // &:hover: box-shadow: ;
+    }
+
+    .sections{
+        display: flex;
+        flex-direction: column;
+        gap: .5em;
+        .dailies {
+            @include white-box;
+        }
+        
+        .weeklies {
+            @include white-box;
+        }
+
+        .events {
+            @include white-box;
+        }
+        .divider1 {
+            width: calc(50%);
+            background-color: var(--grey);
+            height: 1px;
+        }
+        .quest {
+            margin: 0.5em 0;
+        }
+        .quest-title {
+            border-bottom: 1px solid var(--grey);
+            border-right: 1px solid var(--grey);
+            width: max-content;
+            padding: 0.25em;
+            border-radius: 5px;
+        }
+        .quest-desc {
+            max-width: 100%;
+        }
+    }
+
+
+    h3 {
+        text-align: center;
+    }
+
+}

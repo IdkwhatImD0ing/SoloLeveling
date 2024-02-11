@@ -91,50 +91,54 @@
                 height: auto;
                 gap: 1em;
                 margin: 0 1em;
+                overflow-y: scroll;
+                scrollbar-color: var(--light-purple) var(--dark-blue);
+                scrollbar-width: thin;
 
                 @mixin purple-box {
                     border-radius: 20px;
                     border: 3px solid var(--light-purple);
                     display: flex;
-                    gap: 1em;
                     padding: 1em;
                     // &:hover: box-shadow: ;
                 }
 
-                .quests {
-                    display: flex;
-                    height: 700px;
-                    max-height: 80vh;
-                    width: 300px;
-                    flex-direction: column;
-                    // flex-grow: 1;
-                    @include purple-box;
-                }
 
                 .col2 {
                     display: flex;
                     flex-direction: column;
                     flex-basis: 750px;
                     flex-grow: 1;
+                    gap: .5em;
 
                     .profile {
                         width: 750px;
                         @include purple-box;
                         flex-direction: column;
+                        gap: 1em;
+                        span {
+                            display: flex;
+                            gap: .75em;
+                            font-size: 1.5em;
+                        }
                     }
                     .row2 {
                         display: flex;
                         flex-direction: row;
+                        gap: .5em;
                         .stats1 {
                             @include purple-box;
                         }
                         .stats2 {
                             @include purple-box;
+                            width: 100px;
+                            height: 100px;
                         }
                     }
                     .row3 {
                         display: flex;
                         flex-direction: row;
+                        gap: .5em;
                         .leaderboard {
                             @include purple-box;
                         }
@@ -148,15 +152,6 @@
 
         h3, h2, p {
             width: max-content;
-        }
-        h2, h3 {
-            font-family: var(--turret);
-        }
-        h2 {
-            font-size: 4em;
-        }
-        h3 {
-            font-size: 2em;
         }
     }
 
