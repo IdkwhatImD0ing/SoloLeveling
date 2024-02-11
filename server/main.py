@@ -43,7 +43,7 @@ async def create_user(user: User):
 
 
 @app.put("/update_stat/{user_email}")
-async def update_stat(user_email: EmailStr, stat_update: StatUpdate):
+async def update_stat(user_email):
     try:
         update_user_stat(user_email, stat_update.stat_name, stat_update.new_level)
         return {"message": "Stat updated successfully"}
@@ -61,7 +61,7 @@ async def get_daily_quest(user_email: EmailStr = Path(..., example="user@example
 
 
 @app.post("/generate_normal_quest/{user_email}")
-async def generate_normal_quest(user_email: str, selected_muscle_group: str):
+async def generate_normal_quest(user_email, selected_muscle_group):
     try:
         normal_quest = generate_normal_fitness_quest(user_email, selected_muscle_group)
         return {"normal_quest": normal_quest}
@@ -72,7 +72,7 @@ async def generate_normal_quest(user_email: str, selected_muscle_group: str):
 
 
 @app.put("/update_quest/{user_email}")
-async def update_quest(user_email: EmailStr, quest_id: str, exercise_name: str, reps: str = None):
+async def update_quest(user_email: EmailStr, quest_id, exercise_name, reps):
     try:
         print(exercise_name)
         progress_reps = update_quest_exercise(user_email, quest_id, exercise_name.strip(), reps)
@@ -81,7 +81,7 @@ async def update_quest(user_email: EmailStr, quest_id: str, exercise_name: str, 
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
     
 @app.delete("/delete_quest/{user_email}")
-async def delete_quest(user_email: EmailStr, quest_id: str):
+async def delete_quest(user_email):
     try:
         delete_quest_document(user_email, quest_id)
         return {"message": f"Quest {quest_id} deleted successfully"}
