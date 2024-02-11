@@ -3,39 +3,40 @@ import {
   RedirectToSignIn,
   SignedIn,
   SignedOut,
-  UserButton
+  UserButton,
 } from "@clerk/nextjs";
-import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import Link from 'next/link';
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
 
 import styles from "./globals.scss";
-import styles1 from "./home.scss"
+import styles1 from "./home.scss";
 
 export default function Landing() {
-
   return (
     <div>
       <nav>
         <SignedOut>
-          <Link className="signin" href="/sign-in">Sign In</Link>
-          <Link className="signup" href="/sign-up">Sign Up</Link>
+          <Link className="signin" href="/sign-in">
+            Sign In
+          </Link>
+          <Link className="signup" href="/sign-up">
+            Sign Up
+          </Link>
         </SignedOut>
         <SignedIn>
           <div className="h-screen">
-            <UserButton afterSignOutUrl="/"/>
+            <UserButton afterSignOutUrl="/" />
           </div>
         </SignedIn>
       </nav>
-    
-      <section id="hero">
 
+      <section id="hero">
         {/* <div className="h-screen">
           <UserButton afterSignOutUrl="/"/>
-        </div> */
-}
+        </div> */}
 
-{/* <video
+        {/* <video
           src="https://cdn.vidzflow.com/v/H0LDXZjsnq_1080p_1703000142.mp4"
           autoPlay
           loop
@@ -62,28 +63,28 @@ export default function Landing() {
               </div>
             </div>
             <h1 className="hero__h1">
-              Introducing Questify, the app that transforms your workout routine into an exciting game, motivating you to level up your fitness with each exercise session
+              Introducing Questify, the app that transforms your workout routine
+              into an exciting game, motivating you to level up your fitness
+              with each exercise session
             </h1>
             {/* <div className="hero__search--outer">
               <Searchbar search = {search}  setSearch = {setSearch} nav_funct={() => navigate('/bills')}/>
             </div> */}
           </div>
           <SignedIn>
-            <Link className='start' href="/dashboard">
-                Let's Start
-                <FontAwesomeIcon icon={faArrowRight} />
-            </Link>            
+            <Link className="start" href="/dashboard">
+              Let's Start
+              <FontAwesomeIcon icon={faArrowRight} />
+            </Link>
           </SignedIn>
           <SignedOut>
-            <Link className='start' href="/sign-in">
-                Make an Account / Log in
-                <FontAwesomeIcon icon={faArrowRight} />
-            </Link>            
+            <Link className="start" href="/sign-in">
+              Make an Account / Log in
+              <FontAwesomeIcon icon={faArrowRight} />
+            </Link>
           </SignedOut>
-
         </div>
       </section>
     </div>
   );
-                }
-                ;
+}
