@@ -11,69 +11,33 @@ db = firestore.client()
 
 exercise_pool = {
     "Arms": [
-        "Bicep Curls",
-        "Tricep Dips",
-        "Push-Ups",
-        "Hammer Curls",
-        "Tricep Kickbacks",
+        "bicep_curls"
     ],
     "Chest": [
-        "Chair Dips",
-        "Incline Push-Ups",
-        "Standard Push-Ups",
-        "Decline Push-Ups",
-        "Wide Grip Push-Ups",
+        "pushups"
     ],
-    "Core": ["Plank", "Russian Twists", "Sit-Ups", "Leg Raises", "Bicycle Crunches"],
+    "Core": [
+        "high_knees",    
+    ],
     "Back": [
-        "Superman Lifts",
-        "Bird Dogs",
-        "Reverse Snow Angels",
-        "Dumbbell Rows",
-        "Pull-Ups",
+        "squats",
     ],
-    "Thigh": ["Squats", "Lunges", "Sumo Squats", "Side Lunges", "Glute Bridges"],
+    "Thigh": [
+        "lunges",
+    ],
     "Calves": [
-        "Calf Raises",
-        "Jumping Jacks",
-        "High Knees",
-        "Box Jumps",
-        "Seated Calf Raises",
+        "jumping_jacks",
     ],
 }
 
 # Updated targets with pure numbers
 exercise_targets = {
-    "Bicep Curls": 15,
-    "Tricep Dips": 12,
-    "Push-Ups": 10,
-    "Hammer Curls": 12,
-    "Tricep Kickbacks": 15,
-    "Chair Dips": 10,
-    "Incline Push-Ups": 12,
-    "Standard Push-Ups": 10,
-    "Decline Push-Ups": 15,
-    "Wide Grip Push-Ups": 12,
-    "Plank": 30,
-    "Russian Twists": 20,
-    "Sit-Ups": 15,
-    "Leg Raises": 20,
-    "Bicycle Crunches": 30,
-    "Superman Lifts": 10,
-    "Bird Dogs": 12,
-    "Reverse Snow Angels": 15,
-    "Dumbbell Rows": 12,
-    "Pull-Ups": 10,
-    "Squats": 10,
-    "Lunges": 12,
-    "Sumo Squats": 15,
-    "Side Lunges": 12,
-    "Glute Bridges": 15,
-    "Calf Raises": 20,
-    "Jumping Jacks": 15,
-    "High Knees": 20,
-    "Box Jumps": 15,
-    "Seated Calf Raises": 20,
+    "bicep_curls": 12,
+    "pushups": 10,
+    "high_knees": 15,
+    "squats": 10,
+    "lunges": 5,
+    "jumping_jacks": 15,
 }
 
 
@@ -240,3 +204,33 @@ The output should be in JSON format, like so:\n\n{\n"quest_name": "[quest_name]"
     quests_ref.document(quest_id).set(normal_challenge)
 
     return normal_challenge
+
+
+def update_quest_exercise(user_email: str, quest_id: str, exercise_name: str, reps: str):  
+    
+    # Get class type
+    user_ref = db.collection("users").document(user_email)
+    quests_ref = user_ref.collection("quests")
+    quest_ref = quests_ref.document(quest_id)
+    quest_doc = quest_ref.get()
+    
+    if not quest_doc.exists:
+        raise ValueError("Quest does not exist.")
+
+    quest_data = quest_doc.to_dict()
+    
+    if not quest_data.get("exercise"):
+        raise ValueError("Exercise does not exist.")
+
+    exercise_detail = quest_data.get("exercise").get(exercise_name)
+
+    if exercise_detail is None:
+        raise ValueError("Exercise is not part of the quest.")
+
+    # Increment the progress reps by 1 or set it to a specified value
+    exercise_detail["progress_reps"] = exercise_detail.get("progress_reps", 0) + 1 if reps is None else int(reps)
+    
+    # Update the quest
+    quest_ref.update({f"exercise.{exercise_name}.progress_reps": exercise_detail["progress_reps"]})
+    
+    return exercise_detail["progress_reps"]
