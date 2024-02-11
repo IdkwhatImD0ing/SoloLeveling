@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPersonRunning, faChartColumn, faUserGroup, faGamepad, faGear, faArrowRight, faFire } from "@fortawesome/free-solid-svg-icons";
 import Quest from '../quest/page';
+import NavBar from '../navbar/page';
 
 export default function Dashboard() {
     return (
@@ -16,13 +17,7 @@ export default function Dashboard() {
                 <div className='purple-blob2'></div>
             </div>
             <div className='blur-layer'>
-                <nav>
-                    <FontAwesomeIcon icon={faPersonRunning} className='nav-icons' />
-                    <FontAwesomeIcon icon={faChartColumn} className='nav-icons' />
-                    <FontAwesomeIcon icon={faUserGroup} className='nav-icons' />
-                    <FontAwesomeIcon icon={faGamepad} className='nav-icons' />
-                    <FontAwesomeIcon icon={faGear} className='nav-icons' />
-                </nav>
+                <NavBar />
                 <div className='menu'>
                     <div className='top-row'>
                             <Link className='exercise' href="/exercise">
