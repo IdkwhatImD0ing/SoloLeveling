@@ -1,14 +1,63 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./exercise.scss";
 import styles1 from "../globals.scss";
 import Quests from "../quest/page";
 import io from "socket.io-client";
+import { getFirestore, doc, getDoc, collection, getDocs } from 'firebase/firestore';
+import { useFirestore } from "reactfire";
 
 export default function Exercise() {
   const videoRef = useRef(null);
   const socket = useRef(null);
   const intervalRef = useRef(null); // To hold the reference to the interval
+  const firestore = useFirestore();
+
+  const [userStats, setUserStats] = useState({});
+  const [userQuests, setUserQuests] = useState({});
+  const [otherUserData, setOtherUserData] = useState({});
+
+
+  useEffect(() => {
+    console.log("useEffect");
+    // Run get user data every 10 seconds
+    getUserData(process.env.NEXT_PUBLIC_DEMO_EMAIL);
+    const interval = setInterval(() => {
+      getUserData(process.env.NEXT_PUBLIC_DEMO_EMAIL);
+    }, 5000);
+  }, []);
+
+  async function getUserData(email) {
+    const userDocRef = doc(firestore, 'users', email);
+    const userDocSnap = await getDoc(userDocRef);
+  
+    if (userDocSnap.exists()) {
+      const userData = userDocSnap.data();
+      // Assuming all other data except for 'quests' and 'stats' collections is other user data
+      console.log(userData);
+      setOtherUserData(userData);
+  
+      // Fetch sub-collections for the user
+      const collections = ['quests', 'stats']; // Add more collection names if needed
+      for (const coll of collections) {
+        const collRef = collection(userDocRef, coll);
+        const collSnap = await getDocs(collRef);
+        const collData = {};
+        collSnap.forEach((docSnap) => {
+          collData[docSnap.id] = docSnap.data();
+        });
+
+        
+        if (coll === 'stats') {
+          setUserStats(collData);
+        } else if (coll === 'quests') {
+          setUserQuests(collData);
+        }
+      }
+    } else {
+      console.log('No such user document!');
+    }
+  }
 
   useEffect(() => {
     // Initialize Socket.IO connection
