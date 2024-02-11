@@ -234,7 +234,7 @@ def update_quest_exercise(user_email: str, quest_id: str, exercise_name: str, re
     exercise_detail["progress_reps"] = exercise_detail.get("progress_reps", 0) + 1 if reps is None else int(reps)
     
     # Update the progress of exercises and sets
-    if int(exercise_detail["progress_reps"]) >= int(exercise_detail["total_reps"]):
+    if quest_id != "daily_quest" and int(exercise_detail["progress_reps"]) >= int(exercise_detail["total_reps"]):
         exercise_detail["progress_sets"] = exercise_detail.get("progress_sets", 0) + 1
         if int(exercise_detail["progress_sets"]) == int(exercise_detail["total_sets"]):
             quest_ref.update({f"exercise.{exercise_name}.progress_sets": 5})
