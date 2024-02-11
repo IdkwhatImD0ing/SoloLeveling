@@ -38,6 +38,9 @@
   --callout-border-rgb: 172, 175, 176;
   --card-rgb: 180, 185, 188;
   --card-border-rgb: 131, 134, 135;
+  --black: #020513;
+  --dark-purple: #41146F;
+  --light-purple: #9734F9;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -86,13 +89,13 @@ body {
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-color: var(--black);
+}
+
+.contents {
+  height: 100vh;
+  width: 100vw;
+  backdrop-filter: blur(10px);
 }
 
 a {
@@ -105,3 +108,6 @@ a {
     color-scheme: dark;
   }
 }
+
+
+
