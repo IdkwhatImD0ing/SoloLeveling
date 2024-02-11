@@ -21,7 +21,6 @@ export default function Exercise() {
   useEffect(() => {
     console.log("useEffect");
     // Run get user data every 10 seconds
-    getUserData(process.env.NEXT_PUBLIC_DEMO_EMAIL);
     const interval = setInterval(() => {
       getUserData(process.env.NEXT_PUBLIC_DEMO_EMAIL);
     }, 5000);
@@ -47,6 +46,7 @@ export default function Exercise() {
           collData[docSnap.id] = docSnap.data();
         });
 
+        console.log(collData);
         
         if (coll === 'stats') {
           setUserStats(collData);
@@ -58,11 +58,8 @@ export default function Exercise() {
       console.log('No such user document!');
     }
   }
-  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
-
     // Initialize Socket.IO connection
     socket.current = io("http://localhost:8000");
 
@@ -92,12 +89,6 @@ export default function Exercise() {
     };
   }, []);
 
-  useEffect(() => {
-    if (isClient) {
-      startSendingVideo();
-    }
-  }, [isClient]); // Only run this effect when `isClient` changes
-
   const captureAndSendFrame = () => {
     if (videoRef.current && socket.current.connected) {
       const canvas = document.createElement("canvas");
@@ -115,7 +106,7 @@ export default function Exercise() {
           }
           reader.readAsDataURL(blob);
           reader.onloadend = () => {
-            // console.log(reader.result);
+            console.log(reader.result);
             socket.current.emit("receive_image", {
               user_email: process.env.NEXT_PUBLIC_DEMO_EMAIL,
               image: reader.result,
