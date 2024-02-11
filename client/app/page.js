@@ -1,95 +1,56 @@
-import Image from "next/image";
-import styles from "./page.module.scss";
+import { UserButton } from "@clerk/nextjs";
+import styles from "./globals.scss";
+import styles1 from "./home.scss"
+import Link from 'next/link';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
-export default function Home() {
+export default function Landing() {
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    
+    <section id="hero">
+      <div className="h-screen">
+        <UserButton afterSignOutUrl="/"/>
+      </div>
+      {/* <video
+        src="https://cdn.vidzflow.com/v/H0LDXZjsnq_1080p_1703000142.mp4"
+        autoPlay
+        loop
+        muted
+      /> */}
+
+      <div className="hero__video--lighting"></div>
+      <div className="hero__inner">
+        {/* <Nav /> */}
+        <div className="divider"></div>
+        <div className="hero__below-divider">
+          <div className="home__hero--headline">
+            <div className="home__hero-1">
+              <div>What if</div>
+            </div>
+            <div className="home__hero-2">
+              <div>...</div>
+            </div>
+            <div className="home__hero-3">
+              <div>Working out wasn't just a chore</div>
+            </div>
+            <div className="home__hero-4">
+              <div className="overflow__none">But a game?</div>
+            </div>
+          </div>
+          <h1 className="hero__h1">
+            Introducing Questify, the app that transforms your workout routine into an exciting game, motivating you to level up your fitness with each exercise session
+          </h1>
+          {/* <div className="hero__search--outer">
+            <Searchbar search = {search}  setSearch = {setSearch} nav_funct={() => navigate('/bills')}/>
+          </div> */}
         </div>
+        <Link className='start' href="/dashboard">
+            Let's Start
+            <FontAwesomeIcon icon={faArrowRight} />
+        </Link>
       </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    </section>
   );
-}
+};
