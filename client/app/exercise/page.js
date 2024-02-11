@@ -1,10 +1,26 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./exercise.scss";
 import styles1 from "../globals.scss";
 import Quests from "../quest/page";
 import io from "socket.io-client";
-import { getFirestore, doc, getDoc, collection, getDocs } from 'firebase/firestore';
+const trigger_points = [
+  "squat_down",
+  "jumping_jack_up",
+  "curl_up",
+  "lunge_down",
+  "high_knee_up",
+  "push_up_down",
+  "back_row_up",
+];
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  collection,
+  getDocs,
+  set,
+} from "firebase/firestore";
 import { useFirestore } from "reactfire";
 
 export default function Exercise() {
@@ -17,7 +33,6 @@ export default function Exercise() {
   const [userQuests, setUserQuests] = useState({});
   const [otherUserData, setOtherUserData] = useState({});
 
-
   useEffect(() => {
     console.log("useEffect");
     // Run get user data every 10 seconds
@@ -27,17 +42,17 @@ export default function Exercise() {
   }, []);
 
   async function getUserData(email) {
-    const userDocRef = doc(firestore, 'users', email);
+    const userDocRef = doc(firestore, "users", email);
     const userDocSnap = await getDoc(userDocRef);
-  
+
     if (userDocSnap.exists()) {
       const userData = userDocSnap.data();
       // Assuming all other data except for 'quests' and 'stats' collections is other user data
       console.log(userData);
       setOtherUserData(userData);
-  
+
       // Fetch sub-collections for the user
-      const collections = ['quests', 'stats']; // Add more collection names if needed
+      const collections = ["quests", "stats"]; // Add more collection names if needed
       for (const coll of collections) {
         const collRef = collection(userDocRef, coll);
         const collSnap = await getDocs(collRef);
@@ -50,14 +65,15 @@ export default function Exercise() {
         
         if (coll === 'stats') {
           setUserStats(collData);
-        } else if (coll === 'quests') {
+        } else if (coll === "quests") {
           setUserQuests(collData);
         }
       }
     } else {
-      console.log('No such user document!');
+      console.log("No such user document!");
     }
   }
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
     // Initialize Socket.IO connection
@@ -112,6 +128,20 @@ export default function Exercise() {
               image: reader.result,
             });
           };
+          socket.current.on("label", (label) => {
+            // check if label in trigger points
+            if (
+              receivedLabel != previousLabel &&
+              trigger_points.includes(label)
+            ) {
+              console.log("Received label:", label);
+              setPreviousLabel(receivedLabel);
+              setReceivedLabel(label); // Update state with the received label
+            }
+
+            // console.log("Received label:", label);
+            // setReceivedLabel(label); // Update state with the received label
+          });
         },
         "image/jpeg",
         0.95

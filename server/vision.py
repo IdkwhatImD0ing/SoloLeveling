@@ -75,7 +75,7 @@ def get_exercise_label(model, landmarks):
     confidence = np.max(prediction)
 
     # Check if the confidence is above the threshold
-    if confidence > 0.5:
+    if confidence > 0.6:
         # Display the class with the highest confidence
         label = map[predicted_index]
     else:

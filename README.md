@@ -18,8 +18,6 @@ Transform exercise from a chore into an adventure! Featuring an AR app with real
   - [Built With](#built-with)
   - [Challenges](#challenges)
   - [Accomplishments](#accomplishments)
-  - [What We Learned](#what-we-learned)
-  - [What's Next](#whats-next)
   - [How to run](#how-to-run)
 
 ## Inspiration
@@ -61,16 +59,16 @@ Our app leverages technology to make fitness more enjoyable, habitual, and safe,
 ## Built With
 
 ## Challenges
+Unity Learning Curve: We dedicated over 10 hours to mastering Unity, enabling us to craft a mixed reality experience on the Oculus Quest. This effort was pivotal in bringing to life a user dashboard that showcases progress mid-workout, enhancing the immersive aspect of our app.
 
+Posture Database Creation: The scarcity of accessible databases for ideal exercise postures presented a significant hurdle. This led us to take the initiative to build our own robust machine learning model, which we meticulously trained with over 500 unique data points to ensure precise posture recognition.
+
+Real-time Data Syncing with Firebase: Achieving seamless real-time data transmission from Firebase proved to be complex. We navigated through these complexities to enable a live feed of workout data, ensuring that every rep and set is logged and analyzed without delay.
+
+Integrating Backend AI with Frontend Capture: Bridging the gap between our backend machine learning model and the front-end video capture posed a technical challenge. We managed to integrate these components effectively, allowing for real-time posture correction and feedback directly through the user's camera.
 
 ## Accomplishments
-
-
-## What We Learned
-
-
-## What's Next
-
+We successfully dedicated over 10 hours to learning Unity, enabling the creation of an immersive mixed reality experience on the Oculus Quest to visualize user progress in real-time. Additionally, we overcame the lack of available posture databases by developing and training a bespoke machine learning model with more than 500 data points, ensuring accurate and reliable posture tracking. We also tackled and resolved the complexities of syncing real-time data with Firebase, achieving instantaneous logging and analysis of workout sessions. Seamlessly connected our sophisticated backend AI with the frontend camera feed, allowing for immediate posture correction and feedback during exercises.
 
 ## How to run
 1. Clone the repository
