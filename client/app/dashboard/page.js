@@ -5,7 +5,8 @@ import styles1 from "./styles.scss";
 import Image from "next/image";
 import Link from 'next/link';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPersonRunning, faChartColumn, faUserGroup, faGamepad, faGear, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { faPersonRunning, faChartColumn, faUserGroup, faGamepad, faGear, faArrowRight, faFire } from "@fortawesome/free-solid-svg-icons";
+import Quest from '../quest/page';
 
 export default function Dashboard() {
     return (
@@ -30,20 +31,21 @@ export default function Dashboard() {
                             </Link>
                     </div>
                     <div className='panels'>
-                        <div className='quests'>
-                            <h3>Quests</h3>
-                        </div>
+                        <Quest></Quest>
                         <div className='col2'>
                             <div className='profile'>
                                 <h2 className='username'>Annie Wang</h2>
-                                <p>5 days</p>
+                                <span>
+                                    <FontAwesomeIcon icon={faFire} />
+                                    <p>5 days</p>
+                                </span>
                             </div>
                             <div className='row2'>
                                 <div className='stats1'>
                                     <h3>My Progress</h3>
                                 </div>
                                 <div className='stats2'>
-                                    a graph.
+                                    <canvas id="acquisitions"></canvas>
                                 </div>
                             </div>
                             <div className='row3'>
@@ -59,6 +61,7 @@ export default function Dashboard() {
                     </div>
                 </div>
             </div>
+            <script type="module" src="acquisitions.js"></script>
         </div>
     );
 }
