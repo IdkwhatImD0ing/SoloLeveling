@@ -1,9 +1,16 @@
-import { UserButton, ClerkProvider, RedirectToSignIn, SignedIn, SignedOut } from "@clerk/nextjs";
+import {
+  ClerkProvider,
+  RedirectToSignIn,
+  SignedIn,
+  SignedOut,
+  UserButton
+} from "@clerk/nextjs";
+import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import Link from 'next/link';
+
 import styles from "./globals.scss";
 import styles1 from "./home.scss"
-import Link from 'next/link';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 export default function Landing() {
 
@@ -25,9 +32,10 @@ export default function Landing() {
 
         {/* <div className="h-screen">
           <UserButton afterSignOutUrl="/"/>
-        </div> */}
+        </div> */
+}
 
-        {/* <video
+{/* <video
           src="https://cdn.vidzflow.com/v/H0LDXZjsnq_1080p_1703000142.mp4"
           autoPlay
           loop
@@ -77,4 +85,5 @@ export default function Landing() {
       </section>
     </div>
   );
-};
+                }
+                ;
