@@ -1,6 +1,8 @@
 "use client"
 import React, { useEffect, useRef } from 'react';
-import styles from './exercise.css';
+import styles from './exercise.scss';
+import styles1 from '../globals.scss'
+import Quests from '../quest/page';
 
 export default function Exercise() {
   const videoRef = useRef(null);
@@ -19,18 +21,11 @@ export default function Exercise() {
 
   return (
     <main>
-      <div className={styles.container}> 
+      <div className='container'> 
         <div className='video__container'>
-          <video ref={videoRef} autoPlay playsInline muted></video>
+          <video className='video' ref={videoRef} autoPlay playsInline muted></video>
         </div>
-        <div className='quests__container'>
-          <div className='daily__container'>
-          </div>
-          <div className='weekly__container'>
-          </div>
-          <div className='event__container'>
-          </div>
-        </div>
+       <Quests />
       </div>
     </main>
   );
