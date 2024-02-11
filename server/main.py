@@ -1,6 +1,10 @@
 import firebase_admin
-from firebase_admin import credentials
+from firebase_admin import credentials, db
 from dotenv import load_dotenv
+from fastapi import FastAPI
+import asyncio
+from socket_wrapper import socketio_mount  # Ensure this is correctly implemented
+
 
 load_dotenv()
 
@@ -13,7 +17,15 @@ from user import create_initial_user, update_user_stat
 from quests import get_or_create_daily_quest, generate_normal_fitness_quest, update_quest_exercise
 
 app = FastAPI()
+sio = socketio_mount(app)
 
+@app.route('/')
+def index():
+    return "landmark position"
+
+@sio.on('connect')
+async def connect(sid, environ):
+    print("Client connected", sid)
 
 class User(BaseModel):
     email: EmailStr
@@ -26,7 +38,7 @@ class StatUpdate(BaseModel):
     new_level: int
 
 
-@app.post("/create_user/")
+@sio.on("create_user")
 async def create_user(user: User):
     try:
         create_initial_user(
@@ -41,7 +53,7 @@ async def create_user(user: User):
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
 
 
-@app.put("/update_stat/{user_email}")
+@sio.on("update_stat")
 async def update_stat(user_email: EmailStr, stat_update: StatUpdate):
     try:
         update_user_stat(user_email, stat_update.stat_name, stat_update.new_level)
@@ -50,7 +62,7 @@ async def update_stat(user_email: EmailStr, stat_update: StatUpdate):
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
 
 
-@app.get("/get_daily_quest/{user_email}")
+@sio.on("get_daily_quest")
 async def get_daily_quest(user_email: EmailStr = Path(..., example="user@example.com")):
     try:
         daily_quest = get_or_create_daily_quest(user_email)
@@ -59,7 +71,7 @@ async def get_daily_quest(user_email: EmailStr = Path(..., example="user@example
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
 
 
-@app.post("/generate_normal_quest/{user_email}")
+@sio.on("generate_normal_quest")
 async def generate_normal_quest(user_email: str, selected_muscle_group: str):
     try:
         normal_quest = generate_normal_fitness_quest(user_email, selected_muscle_group)
@@ -70,7 +82,7 @@ async def generate_normal_quest(user_email: str, selected_muscle_group: str):
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
 
 
-@app.put("/update_quest/{user_email}")
+@sio.on("update_quest")
 async def update_quest(user_email: EmailStr, quest_id: str, exercise_name: str, reps: str = None):
     try:
         print(exercise_name)
@@ -78,3 +90,12 @@ async def update_quest(user_email: EmailStr, quest_id: str, exercise_name: str, 
         return {"message": f"Exercise {exercise_name} updated successfully to {progress_reps}"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
+    
+@sio.on('disconnect')
+async def disconnect(sid):
+    print('Client disconnected', sid)
+
+
+if __name__ == '__main__':
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
